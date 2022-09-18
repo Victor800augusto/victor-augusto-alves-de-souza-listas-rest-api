@@ -1,6 +1,5 @@
 package com.listas.controllers;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -42,7 +41,7 @@ public class ListaController {
 	@Operation(summary = "Cadastra lista",description = "Cadastra uma nova lista")
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ListaOutput criaLista(@Valid @RequestBody ListaInput lista) throws URISyntaxException {
+	public ListaOutput criaLista(@Valid @RequestBody ListaInput lista)  {
 		ListaEntity listaEntity = listaConvert.inputToEntity(lista);
 		ListaEntity listaCriada = listaService.cria(listaEntity);
 		return listaConvert.entityToOutput(listaCriada);
