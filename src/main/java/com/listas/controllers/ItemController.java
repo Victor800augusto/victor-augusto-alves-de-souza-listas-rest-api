@@ -40,11 +40,15 @@ public class ItemController {
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ItemOutput criaItem(@Valid @RequestBody ItemInput item) {
-		listaService.buscaPeloId(item.getListaId());
 		ItemEntity itemEntity = itemConvert.inputToEntity(item);
+		convertListas(item, itemEntity);
 		itemEntity.setConcluido(false);
 		ItemEntity itemCriado = itemService.cria(itemEntity);
 		return itemConvert.entityToOutput(itemCriado);
+	}
+	
+	private void convertListas(ItemInput itemInput, ItemEntity itemEntity) {
+		itemEntity.setLista(listaService.buscaPeloId(itemInput.getListaId()));
 	}
 
 }
