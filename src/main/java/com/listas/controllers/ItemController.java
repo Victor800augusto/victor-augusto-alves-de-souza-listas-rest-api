@@ -16,13 +16,14 @@ import com.listas.dto.inputs.ItemInput;
 import com.listas.dto.outputs.ItemOutput;
 import com.listas.entities.ItemEntity;
 import com.listas.services.ItemService;
+import com.listas.services.ListaService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Item")
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping("/api/itens")
 @CrossOrigin(origins = "*")
 public class ItemController {
 	
@@ -32,11 +33,16 @@ public class ItemController {
 	@Autowired
 	private ItemConvert itemConvert;
 	
+	@Autowired
+	private ListaService listaService;
+	
 	@Operation(summary = "Cadastra item",description = "Cadastra um novo item")
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ItemOutput criaItem(@Valid @RequestBody ItemInput item) {
+		listaService.buscaPeloId(item.getListaId());
 		ItemEntity itemEntity = itemConvert.inputToEntity(item);
+		itemEntity.setConcluido(false);
 		ItemEntity itemCriado = itemService.cria(itemEntity);
 		return itemConvert.entityToOutput(itemCriado);
 	}

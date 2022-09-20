@@ -21,8 +21,8 @@ public class ItemConvert {
 		return model.map(itemEntity, ItemOutput.class);
 	}
 
-	public List<ItemOutput> entityToOutput(List<ItemEntity> itemsEntity) {
-		return itemsEntity.stream().map(item -> this.entityToOutput(item)).collect(Collectors.toList());
+	public List<ItemOutput> entityToOutput(List<ItemEntity> itensEntity) {
+		return itensEntity.stream().map(item -> this.entityToOutput(item)).collect(Collectors.toList());
 	}
 
 	public ItemEntity inputToEntity(ItemInput itemInput) {

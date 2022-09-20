@@ -19,8 +19,8 @@ public class openAPIConfig {
 		info.version("v0.0.1"); 
 		openApi.info(info);
 		
-		//openApi.addTagsItem(new Tag().name("Lista").description("Gerencia as listas do sistema"));
-		//openApi.addTagsItem(new Tag().name("Item").description("Gerencia as items do sistema"));
+		openApi.addTagsItem(new Tag().name("Lista").description("Gerencia as listas do sistema"));
+		openApi.addTagsItem(new Tag().name("Item").description("Gerencia as itens do sistema"));
 		
 		info.description("descricao aqui mudar depois"); 
 		

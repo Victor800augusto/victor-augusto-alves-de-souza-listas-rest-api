@@ -9,19 +9,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.listas.exceptions.BadRequestBussinessException;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_items")
+@Table(name = "tb_itens")
 @Getter
 @Setter
 public class ItemEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
 
 	@Column(length = 100, name = "titulo")
@@ -34,15 +33,4 @@ public class ItemEntity {
 	@ManyToOne
 	private ListaEntity lista;
 	
-	public void setTitulo(String titulo) {
-		if (titulo == null || "".equals(titulo)) {
-			throw new BadRequestBussinessException("O campo título é obrigatório!");
-		}
-
-		if (titulo.length() > 1000) {
-			throw new BadRequestBussinessException("O campo título deve ter no máximo 100 caracteres!");
-		}
-
-		this.titulo = titulo;
-	}
 }
