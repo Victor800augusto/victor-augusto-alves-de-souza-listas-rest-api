@@ -17,10 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.listas.converts.ItemConvert;
 import com.listas.converts.ListaConvert;
 import com.listas.dto.inputs.ListaInput;
+import com.listas.dto.outputs.ItemOutput;
 import com.listas.dto.outputs.ListaOutput;
+import com.listas.entities.ItemEntity;
 import com.listas.entities.ListaEntity;
+import com.listas.services.ItemService;
 import com.listas.services.ListaService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,6 +41,12 @@ public class ListaController {
 
 	@Autowired
 	private ListaConvert listaConvert;
+	
+	@Autowired
+	private ItemService itemService;
+
+	@Autowired
+	private ItemConvert itemConvert;
 
 	@Operation(summary = "Cadastra lista",description = "Cadastra uma nova lista")
 	@PostMapping
@@ -81,11 +91,10 @@ public class ListaController {
 		return listaConvert.entityToOutput(listaTodos);
 	}
 
-	//private void convertAutores(LivroInput livro, LivroEntity livroEntity) {
-		//List<AutorEntity> autores = new ArrayList<>();
-		//for (Long autorId : livro.getAutoresIds()) {
-		//	autores.add(autorService.buscaPeloId(autorId));
-		//}
-		//livroEntity.setAutores(autores);
-	//}
+	@Operation(summary = "Lista itens da lista")
+	@GetMapping("/{idLista}/itens")
+	public List<ItemOutput> listaItens(@PathVariable Long idLista) {
+		List<ItemEntity> listaTodos = itemService.listaItensPelaLista(idLista);
+		return itemConvert.entityToOutput(listaTodos);
+	}
 }

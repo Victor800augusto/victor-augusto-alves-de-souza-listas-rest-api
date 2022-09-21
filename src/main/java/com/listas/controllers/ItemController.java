@@ -5,7 +5,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -45,6 +48,44 @@ public class ItemController {
 		itemEntity.setConcluido(false);
 		ItemEntity itemCriado = itemService.cria(itemEntity);
 		return itemConvert.entityToOutput(itemCriado);
+	}
+	
+	@Operation(summary = "Altera item",description = "Altera um item")
+	@PutMapping("/{id}")
+	public ItemOutput alteraLivro(@PathVariable Long id, @Valid @RequestBody ItemInput itemInput) {
+		ItemEntity itemEntity = itemService.buscaPeloId(id);
+		itemConvert.copyDataInputToEntity(itemInput, itemEntity);
+
+		convertListas(itemInput, itemEntity);
+
+		ItemEntity itemAlterado = itemService.atualiza(itemEntity);
+		return itemConvert.entityToOutput(itemAlterado);
+	}
+	
+	@Operation(summary = "Remove item",description = "Remove um item")
+	@DeleteMapping("/{id}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void removeLivro(@PathVariable Long id) {
+		ItemEntity itemEntity = itemService.buscaPeloId(id);
+		itemService.remove(itemEntity);
+	}
+	
+	@Operation(summary = "Marca item como concluido",description = "Marca um item como concluido")
+	@PutMapping("/{id}/item-concluido")
+	public ItemOutput marcaItemComoConcluido(@PathVariable Long id) {
+		ItemEntity itemEntity = itemService.buscaPeloId(id);
+		itemEntity.setConcluido(true);
+		ItemEntity itemAlterado = itemService.atualiza(itemEntity);
+		return itemConvert.entityToOutput(itemAlterado);
+	}
+
+	@Operation(summary = "Marca item como não concluido",description = "Marca um item como não concluido")
+	@PutMapping("/{id}/item-nao-concluido")
+	public ItemOutput marcaItemComoNaoConcluido(@PathVariable Long id) {
+		ItemEntity itemEntity = itemService.buscaPeloId(id);
+		itemEntity.setConcluido(false);
+		ItemEntity itemAlterado = itemService.atualiza(itemEntity);
+		return itemConvert.entityToOutput(itemAlterado);
 	}
 	
 	private void convertListas(ItemInput itemInput, ItemEntity itemEntity) {
