@@ -10,7 +10,7 @@ tabela inferior e apertar em 'Next' -> Quando terminar apertar em 'Next' -> Acei
 em 'Trust selected' -> 'Restart Now'.
 
 # Execução do projeto
-1 - git clone https://github.com/Victor800augusto/Atividade01.git
+1 - git clone https://github.com/Victor800augusto/victor-augusto-alves-de-souza-listas-rest-api.git
 
 2 - Importar projeto no spring-tool-suite4 como 'Existing Maven Projects'.
 
