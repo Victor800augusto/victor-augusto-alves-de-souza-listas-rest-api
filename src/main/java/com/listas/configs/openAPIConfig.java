@@ -22,7 +22,7 @@ public class openAPIConfig {
 		openApi.addTagsItem(new Tag().name("Lista").description("Gerencia as listas do sistema"));
 		openApi.addTagsItem(new Tag().name("Item").description("Gerencia as itens do sistema"));
 		
-		info.description("descricao aqui mudar depois"); 
+		info.description("Projeto da avaliação 03"); 
 		
 		return openApi;
 	}
